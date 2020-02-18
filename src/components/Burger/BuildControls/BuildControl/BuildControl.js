@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import classes from "./BuildControl.css";
+
 const buildControl = props => {
-  console.log("object");
   const label = props.type
     .split("")
     .map((char, i) => {

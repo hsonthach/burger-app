@@ -13,6 +13,9 @@ class BuildControls extends PureComponent {
   render() {
     return (
       <div className={classes.BuildControls}>
+        <p>
+          Total Price : <strong>{this.props.price}</strong>
+        </p>
         {this.props.types.map(type => (
           <BuildControl
             key={type}
@@ -22,6 +25,12 @@ class BuildControls extends PureComponent {
             disabled={this.props.disabledInfo[type]}
           />
         ))}
+        <button
+          className={classes.OrderButton}
+          disabled={!this.props.purchasable}
+        >
+          ORDER NOW
+        </button>
       </div>
     );
   }

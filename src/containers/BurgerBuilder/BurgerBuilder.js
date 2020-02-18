@@ -18,7 +18,15 @@ export default class BurgerBuilder extends Component {
       meat: 0,
       bacon: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
+  };
+
+  updatePurchasable = ingredients => {
+    for (let key in ingredients) {
+      if (ingredients[key]) return this.setState({ purchasable: true });
+    }
+    this.setState({ purchasable: false });
   };
 
   increaseIngredientHandler = type => {
@@ -37,6 +45,7 @@ export default class BurgerBuilder extends Component {
         totalPrice: this.state.totalPrice + additionalPrice
       };
     });
+    this.updatePurchasable(newIngredients);
   };
 
   decreaseIngredientHandler = type => {
@@ -55,6 +64,7 @@ export default class BurgerBuilder extends Component {
         totalPrice: this.state.totalPrice - decreasePrice
       };
     });
+    this.updatePurchasable(newIngredients);
   };
 
   render() {
@@ -65,12 +75,13 @@ export default class BurgerBuilder extends Component {
     return (
       <div className={classes.BurgerBuilder}>
         <Burger ingredients={this.state.ingredients} />
-        <p>Total Price : {this.state.totalPrice}</p>
         <BuildControls
           types={Object.keys(this.state.ingredients)}
           increase={this.increaseIngredientHandler}
           decrease={this.decreaseIngredientHandler}
           disabledInfo={disabledInfo}
+          price={this.state.totalPrice}
+          purchasable={this.state.purchasable}
         />
       </div>
     );
