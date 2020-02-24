@@ -1,17 +1,12 @@
-import React, { memo } from "react";
+import React from "react";
 import classes from "./BuildControl.css";
 
 const buildControl = props => {
-  const label = props.type
-    .split("")
-    .map((char, i) => {
-      if (i === 0) return char.toUpperCase();
-      return char;
-    })
-    .join("");
   return (
     <div className={classes.BuildControl}>
-      <div className={classes.Label}>{label}</div>
+      <div className={classes.Label} style={{ textTransform: "capitalize" }}>
+        {props.type}
+      </div>
       <button
         className={classes.Less}
         onClick={props.decrease.bind(this, props.type)}
@@ -29,4 +24,4 @@ const buildControl = props => {
   );
 };
 
-export default memo(buildControl);
+export default buildControl;
