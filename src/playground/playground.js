@@ -1,34 +1,21 @@
-// // rpcp
-// import React, { PureComponent } from 'react'
-// import PropTypes from 'prop-types'
+const axios = require("axios");
+axios.interceptors.response.use(
+  res => {
+    console.log("Interceptors response");
+    return res;
+  },
+  error => {
+    console.log(error.message);
+  }
+);
 
-// export default class playground extends PureComponent {
-//     static propTypes = {
-
-//     }
-
-//     render() {
-//         return (
-//             <div>
-
-//             </div>
-//         )
-//     }
-// }
-// //rmcp
-// import React, { memo } from 'react'
-// import PropTypes from 'prop-types'
-
-// const playground = memo(function playground(props) {
-//     return (
-//         <div>
-
-//         </div>
-//     )
-// })
-
-// playground.propTypes = {
-
-// }
-
-// export default playground
+axios
+  .get("https://burger-app-8b24d.firebaseio.com/ingredients.json")
+  .then(res => {
+    console.log(res.status);
+    console.log("Always run eventhough there is error");
+  })
+  .catch(e => {
+    console.log(e.message);
+    console.log("Error");
+  });

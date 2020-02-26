@@ -3,7 +3,7 @@ import classes from "./Modal.css";
 import BackDrop from "../BackDrop/BackDrop";
 class modal extends Component {
   shouldComponentUpdate(prevProps, prevState) {
-    return prevProps.show !== this.props.show;
+    return prevProps.show !== this.props.show || prevProps.loading === null;
   }
   render() {
     return (
@@ -17,10 +17,7 @@ class modal extends Component {
         >
           {this.props.children}
         </div>
-        <BackDrop
-          clicked={this.props.cancelPurchasing}
-          show={this.props.show}
-        />
+        <BackDrop clicked={this.props.modalClosed} show={this.props.show} />
       </React.Fragment>
     );
   }
