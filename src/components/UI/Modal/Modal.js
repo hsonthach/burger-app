@@ -3,7 +3,7 @@ import classes from "./Modal.css";
 import BackDrop from "../BackDrop/BackDrop";
 class modal extends Component {
   shouldComponentUpdate(prevProps, prevState) {
-    return prevProps.show !== this.props.show || prevProps.loading === null;
+    return prevProps.show !== this.props.show || prevProps.loading === true;
   }
   render() {
     return (

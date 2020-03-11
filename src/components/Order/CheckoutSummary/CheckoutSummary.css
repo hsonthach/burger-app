@@ -1,0 +1,24 @@
+/* .CheckoutSummary {
+  display: block;
+  width: 70%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+} */
+
+.CheckoutSummary {
+  text-align: center;
+  width: 100%;
+  margin: auto;
+}
+
+.Burger:first-child {
+  margin: 20px;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  width: 500px;
+}

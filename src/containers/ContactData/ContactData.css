@@ -1,0 +1,28 @@
+.ContactData form {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  flex-direction: column;
+  border: 1px solid #eee;
+  box-shadow: 0px 2px 3px #ccc;
+  box-sizing: border-box;
+  padding: 16px;
+}
+.ContactData h4 {
+  border-top: 1px solid blue;
+  display: inline-block;
+  padding: 16px;
+  width: 200px;
+}
+.ContactData form * {
+  margin-top: 16px;
+}
+
+@media (min-width: 600px) {
+  .ContactData form {
+    width: 500px;
+  }
+  .ContactData h4 {
+    width: 200px;
+  }
+}

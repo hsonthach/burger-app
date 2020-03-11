@@ -1,15 +1,20 @@
-import React, { memo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import classes from "./NavigationItem.css";
-const navigationItem = memo(function navigationItem(props) {
+import { NavLink } from "react-router-dom";
+const navigationItem = props => {
   return (
     <li className={classes.NavigationItem}>
-      <a href={props.link} className={props.active ? classes.active : null}>
+      <NavLink to={props.link} exact activeClassName={classes.active}>
         {props.children}
-      </a>
+      </NavLink>
+
+      {/* <a href={props.link} className={props.active ? classes.active : null}>
+        {props.children}
+      </a> */}
     </li>
   );
-});
+};
 
 navigationItem.propTypes = {
   active: PropTypes.bool,
