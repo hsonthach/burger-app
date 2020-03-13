@@ -22,7 +22,6 @@ class Layout extends Component {
           toggledSideDrawer={this.toggleSideDrawerHandler}
           show={this.state.showSideDrawer}
         />
-        <div>Toolbar,SideDrawer,Backdrop</div>
         <main className={classes.Content}>{this.props.children}</main>
       </React.Fragment>
     );

@@ -1,11 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 import Logo from "../../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import PropTypes from "prop-types";
 import classes from "./SideDrawer.css";
 import BackDrop from "../../BackDrop/BackDrop";
 
-const sideDrawer = memo(function sideDrawer(props) {
+const sideDrawer = props => {
   let sideDrawerClass = [
     classes.SideDrawer,
     props.show ? classes.Open : classes.Close
@@ -25,7 +25,7 @@ const sideDrawer = memo(function sideDrawer(props) {
       </div>
     </React.Fragment>
   );
-});
+};
 
 sideDrawer.propTypes = {
   toggledSideDrawer: PropTypes.func

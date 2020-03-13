@@ -9,10 +9,12 @@
   padding: 16px;
 }
 .ContactData h4 {
-  border-top: 1px solid blue;
+  border-bottom: 1px solid blue;
   display: inline-block;
   padding: 16px;
-  width: 200px;
+  margin: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 .ContactData form * {
   margin-top: 16px;
@@ -21,8 +23,5 @@
 @media (min-width: 600px) {
   .ContactData form {
     width: 500px;
-  }
-  .ContactData h4 {
-    width: 200px;
   }
 }
