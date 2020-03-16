@@ -21,28 +21,19 @@ class BurgerBuilder extends Component {
   };
 
   updatePurchasable = ingredients => {
+    let purchasable = false;
     for (let key in ingredients) {
-      if (ingredients[key] > 0) return this.setState({ purchasable: true });
+      if (ingredients[key] > 0) purchasable = true;
     }
-    this.setState({ purchasable: false });
+    return purchasable;
   };
 
   addIngredientHandler = type => {
-    this.props.addIngredient(type, [
-      {
-        method: this.updatePurchasable,
-        params: ["ingredients"]
-      }
-    ]);
+    this.props.addIngredient(type);
   };
 
   removeIngredientHandler = type => {
-    this.props.removeIngredient(type, [
-      {
-        method: this.updatePurchasable,
-        params: ["ingredients"]
-      }
-    ]);
+    this.props.removeIngredient(type);
   };
 
   purchasingHandler = () => {
@@ -94,7 +85,7 @@ class BurgerBuilder extends Component {
             decrease={this.removeIngredientHandler}
             disabledInfo={disabledInfo}
             price={this.props.totalPrice}
-            purchasable={this.state.purchasable}
+            purchasable={this.updatePurchasable(this.props.ingredients)}
             purchasing={this.purchasingHandler}
           />
         </React.Fragment>
