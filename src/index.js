@@ -5,9 +5,9 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import ingredientsReducer from "./store/reducers/reducer";
+import reducer from "./store/reducers/reducer";
 const rootReducer = combineReducers({
-  ingredientsReducer
+  reducer
 });
 const store = createStore(rootReducer);
 
