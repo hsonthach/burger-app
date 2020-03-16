@@ -3,11 +3,19 @@ import PropTypes from "prop-types";
 import classes from "./Input.css";
 const Input = props => {
   let inputElement;
+  let errorMessage = null;
+  let inputClasses = [classes.InputElement];
+  if (!props.isValid && props.touched) {
+    inputClasses.push(classes.Invalid);
+    errorMessage = (
+      <p className={classes.ErrorMessage}>Please enter valid input</p>
+    );
+  }
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
-          className={classes.InputElement}
+          className={inputClasses.join(" ")}
           onChange={props.changed}
           {...props.elementConfig}
         />
@@ -16,7 +24,7 @@ const Input = props => {
     case "textarea":
       inputElement = (
         <textarea
-          className={classes.InputElement}
+          className={inputClasses.join(" ")}
           onChange={props.changed}
           {...props.elementConfig}
         />
@@ -25,7 +33,7 @@ const Input = props => {
     case "select":
       inputElement = (
         <select
-          className={classes.InputElement}
+          className={inputClasses.join(" ")}
           onChange={props.changed}
           {...props.elementConfig}
         >
@@ -45,7 +53,7 @@ const Input = props => {
 
     default:
       inputElement = (
-        <input className={classes.InputElement} {...props.elementConfig} />
+        <input className={inputClasses.join(" ")} {...props.elementConfig} />
       );
   }
 
@@ -53,6 +61,7 @@ const Input = props => {
     <div className={classes.Input}>
       <label>{props.label}</label>
       {inputElement}
+      {errorMessage}
     </div>
   );
 };

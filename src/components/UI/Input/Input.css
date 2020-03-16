@@ -1,7 +1,4 @@
 .Input * {
-  margin: 3px;
-}
-.Input {
   width: 100%;
 }
 
@@ -16,11 +13,27 @@
 .InputElement {
   padding: 10px;
   width: 90%;
-  margin: auto;
+  margin: 16px auto 10px auto;
   outline: none;
   box-sizing: border-box;
 }
 
 .InputElement:focus {
   background-color: #ccc;
+}
+
+.Invalid {
+  border: 1px solid red;
+  background-color: rgb(241, 160, 151);
+}
+
+.ErrorMessage {
+  display: block;
+  font-size: 0.9rem;
+  background-color: rgb(236, 178, 172);
+  color: rgb(240, 39, 39);
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 3px;
 }

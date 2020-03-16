@@ -8,6 +8,10 @@ import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
+// redux
+import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions";
+
 const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 0.4,
@@ -77,29 +81,6 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
   continuePurchasingHandler = () => {
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice, // The price should not be sent in production in case users manipulate code
-    //   customer: {
-    //     name: "Test",
-    //     address: {
-    //       street: "None",
-    //       zipCode: "9999",
-    //       country: "VietNam"
-    //     },
-    //     email: "test@test.com",
-    //     deliveryMethod: "fastest"
-    //   }
-    // };
-    // this.setState({ loading: true });
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(response => {
-    //     this.setState({ loading: false, purchasing: false });
-    //   })
-    //   .catch(e => {
-    //     this.setState({ loading: false });
-    //   });
     let params = [];
     for (let key in this.state.ingredients) {
       params.push(
@@ -122,6 +103,7 @@ class BurgerBuilder extends Component {
 
   render() {
     let disabledInfo = { ...this.state.ingredients };
+    console.log(this.props);
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
@@ -172,18 +154,32 @@ class BurgerBuilder extends Component {
     );
   }
 
-  componentDidMount() {
-    axios
-      .get("/ingredients.json")
-      .then(res => {
-        this.setState({ ingredients: res.data });
-      })
-      .catch(e => {
-        this.setState({
-          error: new Error(`Can't load the ingredients from server`)
-        });
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get("/ingredients.json")
+  //     .then(res => {
+  //       this.setState({ ingredients: res.data });
+  //     })
+  //     .catch(e => {
+  //       this.setState({
+  //         error: new Error(`Can't load the ingredients from server`)
+  //       });
+  //     });
+  // }
 }
+const mapStateToProps = state => ({
+  ingredients: state.ingredients,
+  totalPrice: state.totalPrice
+});
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapDispatchToProps = dispatch => ({
+  addIngredient: type =>
+    dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientType: type }),
+  setIngredients: ingredients =>
+    dispatch({ type: actionTypes.SET_INGREDIENTS, ingredients })
+});
+
+export default withErrorHandler(
+  connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder),
+  axios
+);

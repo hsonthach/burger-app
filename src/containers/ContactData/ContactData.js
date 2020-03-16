@@ -4,6 +4,7 @@ import Button from "../../components/UI/Button/Button";
 import classes from "./ContactData.css";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import validator from "validator";
 //import PropTypes from 'prop-types'
 
 export default class ContactData extends Component {
@@ -15,7 +16,12 @@ export default class ContactData extends Component {
           type: "text",
           placeholder: "Your Name"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        isValid: false,
+        touched: false
       },
       email: {
         elementType: "input",
@@ -23,7 +29,13 @@ export default class ContactData extends Component {
           type: "email",
           placeholder: "Your E-Mail"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          emailType: true
+        },
+        isValid: false,
+        touched: false
       },
       street: {
         elementType: "input",
@@ -31,7 +43,12 @@ export default class ContactData extends Component {
           type: "text",
           placeholder: "Street"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        isValid: false,
+        touched: false
       },
       postalCode: {
         elementType: "input",
@@ -39,7 +56,12 @@ export default class ContactData extends Component {
           type: "text",
           placeholder: "Postal Code"
         },
-        value: ""
+        value: "",
+        validation: {
+          postalCodeType: true
+        },
+        isValid: false,
+        touched: false
       },
       country: {
         elementType: "input",
@@ -47,7 +69,12 @@ export default class ContactData extends Component {
           type: "text",
           placeholder: "Your Country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        isValid: false,
+        touched: false
       },
       deliveryMethod: {
         elementType: "select",
@@ -57,12 +84,16 @@ export default class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" }
           ]
         },
-        value: ""
+        value: "fastest",
+        isValid: true,
+        touched: false
       }
     },
+    isFormValid: false,
     loading: false
   };
   static propTypes = {};
+
   orderHandler = event => {
     event.preventDefault();
     let submitForm = {};
@@ -87,10 +118,36 @@ export default class ContactData extends Component {
       });
   };
 
+  checkValidity = (value, rules) => {
+    let isValid = true;
+    if (!rules) return true;
+    if (rules.required) {
+      isValid = value.trim() !== "";
+    }
+    if (rules.emailType) {
+      isValid = validator.isEmail(value) && isValid;
+    }
+    return isValid;
+  };
+
+  checkForm = form => {
+    let isValid = true;
+    for (let key in form) {
+      isValid = isValid && form[key].isValid;
+    }
+    return isValid;
+  };
+
   inputchangedHandler = (key, event) => {
     let orderForm = { ...this.state.orderForm };
     orderForm[key].value = event.target.value;
-    this.setState(orderForm);
+    orderForm[key].isValid = this.checkValidity(
+      orderForm[key].value,
+      orderForm[key].validation
+    );
+    orderForm[key].touched = true;
+    this.setState({ orderForm });
+    this.setState({ isFormValid: this.checkForm(orderForm) });
   };
   render() {
     let formElement = [];
@@ -101,16 +158,21 @@ export default class ContactData extends Component {
           value={this.state.orderForm[key].value}
           elementType={this.state.orderForm[key].elementType}
           key={key}
+          touched={this.state.orderForm[key].touched}
           changed={this.inputchangedHandler.bind(this, key)}
+          isValid={this.state.orderForm[key].isValid}
         />
       );
     }
+
     let form = (
       <React.Fragment>
         <form onSubmit={this.orderHandler}>
           <h4>Enter Your Contact Data</h4>
           {formElement}
-          <Button btnType="Success">ORDER</Button>
+          <Button btnType="Success" disabled={!this.state.isFormValid}>
+            ORDER
+          </Button>
         </form>
       </React.Fragment>
     );

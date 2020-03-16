@@ -16,9 +16,6 @@
   width: 100%;
   box-sizing: border-box;
 }
-.ContactData form * {
-  margin-top: 16px;
-}
 
 @media (min-width: 600px) {
   .ContactData form {
